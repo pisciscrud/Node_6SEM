@@ -1,0 +1,30 @@
+drop table book;
+drop table genre;
+drop table publisher;
+create table Book (id int  primary key AUTO_INCREMENT,
+                         name_book VARCHAR(50) NOT NULL,
+						name_author VARCHAR(50) NOT NULL,
+                        code_publisher VARCHAR(50) NOT NULL,
+                        code_genre VARCHAR(50) NOT NULL,
+                         FOREIGN KEY (code_publisher) REFERENCES Publisher (code_publisher) ON DELETE CASCADE,
+                         FOREIGN KEY (code_genre) REFERENCES Genre (name_genre) ON DELETE CASCADE);
+                       
+                         
+create table Genre (    name_genre varchar(50) not null ,
+    CONSTRAINT pk_genre PRIMARY KEY (name_genre)) ; 
+    
+ create table Publisher (  code_publisher varchar(50) not null,
+ name_publisher varchar(50) not null ,
+CONSTRAINT pk_publisher PRIMARY KEY (code_publisher)) ;    
+ 
+ insert into genre values('Comedy');
+ insert into genre values('Drama');
+  insert into genre values('Detective');
+insert into genre values('Poem');
+insert into genre values('Roman');
+
+insert into publisher values ('WL','White lotos');
+insert into publisher values ('BR','Black Rose');
+insert into publisher values ('RS','Rosman');
+
+insert into book values (1,'Woods','Petrov','WL','Roman');
