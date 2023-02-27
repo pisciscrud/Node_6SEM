@@ -4,35 +4,37 @@ const client = redis.createClient();
 client.connect().then(() => console.log('connect'));
 
 client.on('connect', async () => {
+
+    
     console.log('Test set: ');
+   
 
     console.time();
-    for (let i = 0; i < 10000; i++) {
-        await client.set(`${i}`, `value:${i}`);
-    }
+    const arr = Array.from({length: 10000}, (_, i) =>client.set(`${i}`, `value:${i}`) );
+    await Promise.all(arr);
     console.timeEnd();
+
     console.log('-------------------------------');
 
     console.log('Test get: ');
-    console.time()
-    for (let i = 0; i < 10000; i++) {
-        //console.log(await client.get(i));
-        await client.get(`${i}`);
-    }
+    console.time();
+    const arr2= Array.from({length: 10000}, (_, i) =>client.get(`${i}`) );
+    await Promise.all(arr2);
     console.timeEnd()
     console.log('-------------------------------');
 
+
     console.log('Test del: ');
     console.time()
-    for (let i = 0; i < 10000; i++) {
-        //console.log(await client.get(i));
-        await client.del(`${i}`);
-    }
+    const arr3= Array.from({length: 10000}, (_, i) =>client.del(`${i}`) );
+
+    await Promise.all(arr3);
     console.timeEnd()
     console.log('-------------------------------');
 
     await disconnect();
 });
+
 
 client.on('error', (err) => {throw err});
 

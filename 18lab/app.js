@@ -5,6 +5,7 @@ const GetHandler = require("./handlers/GetHandler");
 const PostHandler = require("./handlers/PostHandler");
 const PutHandler = require("./handlers/PutHandler");
 const DeleteHandler = require("./handlers/DeleteHandler");
+const { log } = require("console");
 
 
 sequelize.authenticate().then(() => {
@@ -18,6 +19,7 @@ let handler = (params) => {
  
     switch(params.req.method) {
         case "GET":
+            console.log("GET");
             GetHandler(params);
             break;
         case "POST":

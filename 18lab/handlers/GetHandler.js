@@ -26,8 +26,21 @@ module.exports = ({ res, req, collections }) => {
             break;
         }
 
-        case path == '/api/faculties': {
-        collections.Faculty.findAll()
+        case path == '/api/organizations': {
+         
+            // async ()=>{
+               
+            //     try{
+            //     const values = await collections.Organization.findAll();
+            //     res.statusCode = 200;
+            //     res.setHeader('Content-Type', 'application/json');
+            //     res.end(JSON.stringify(values))
+            //     }
+            //     catch(error){
+            //         errorHandler(res, 2, error);
+            //     }
+            // }
+        collections.Organization.findAll()
                 .then(values => {
                   res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
@@ -37,8 +50,8 @@ module.exports = ({ res, req, collections }) => {
             break;
         }
 
-        case path == '/api/teachers': {
-            collections.Teacher.findAll()
+        case path == '/api/departments': {
+            collections.Departments.findAll()
                     .then(values => {
                       res.statusCode = 200;
                     res.setHeader('Content-Type', 'application/json');
@@ -49,8 +62,8 @@ module.exports = ({ res, req, collections }) => {
             }
 
 
-        case path == '/api/pulpits': {
-            collections.Pulpit.findAll()
+        case path == '/api/employees': {
+            collections.Employees.findAll()
                 .then(values => {
                     res.statusCode = 200;
                     res.setHeader('Content-Type', 'application/json');
@@ -60,8 +73,8 @@ module.exports = ({ res, req, collections }) => {
             break;
         }
 
-        case path == '/api/subjects': {
-           collections.Subject.findAll()
+        case path == '/api/KPIs': {
+           collections.KPIs.findAll()
                 .then(values => {
                     res.statusCode = 200;
                     res.setHeader('Content-Type', 'application/json');
@@ -71,8 +84,8 @@ module.exports = ({ res, req, collections }) => {
             break;
         }
 
-        case path == '/api/auditoriumtypes': {
-            collections.Auditorium_type.findAll()
+        case path == '/api/KPI_Results': {
+            collections.KPI_Results.findAll()
                 .then(values => {
                   res.statusCode = 200;
                     res.setHeader('Content-Type', 'application/json');
@@ -82,8 +95,8 @@ module.exports = ({ res, req, collections }) => {
             break;
         }
 
-        case path == '/api/auditoriums': {
-          collections.Auditorium.findAll()
+        case path == '/api/Tasks': {
+          collections.Tasks.findAll()
                 .then(values => {
                    res.statusCode = 200;
                     res.setHeader('Content-Type', 'application/json');
@@ -94,33 +107,33 @@ module.exports = ({ res, req, collections }) => {
         }
 
 
-        case path == `/api/auditoriumtypes/${pathParameters[3]}/auditoriums`: {
-            console.log(pathParameters[3]);
-            res.writeHead(200, { 'Content-Type': 'application/json' });
-            DB.find([`${pathParameters[3]}`], 'auditorium1').then((result) => {
-                if (!result) {
-                    throw new Error();
+        // case path == `/api//${pathParameters[3]}/auditoriums`: {
+        //     console.log(pathParameters[3]);
+        //     res.writeHead(200, { 'Content-Type': 'application/json' });
+        //     DB.find([`${pathParameters[3]}`], 'auditorium1').then((result) => {
+        //         if (!result) {
+        //             throw new Error();
 
-                }
-                else {
-                    res.end(JSON.stringify(result))
-                }
-            }).catch(error => { errorHandler(res, 6, `Such type is not found`); });
-            break;
-        }
-        case path == `/api/faculty/${pathParameters[3]}/pulpits`: {
-            console.log(pathParameters[3]);
-            res.writeHead(200, { 'Content-Type': 'application/json' });
-            DB.find([`${pathParameters[3]}`], 'pulpit1').then((result) => {
-                if (!result) {
-                    throw new Error();
-                }
-                else {
-                    res.end(JSON.stringify(result))
-                }
-            }).catch(error => { errorHandler(res, 6, `Such faculty is not found`); });
-            break;
-        }
+        //         }
+        //         else {
+        //             res.end(JSON.stringify(result))
+        //         }
+        //     }).catch(error => { errorHandler(res, 6, `Such type is not found`); });
+        //     break;
+        // }
+        // case path == `/api/faculty/${pathParameters[3]}/pulpits`: {
+        //     console.log(pathParameters[3]);
+        //     res.writeHead(200, { 'Content-Type': 'application/json' });
+        //     DB.find([`${pathParameters[3]}`], 'pulpit1').then((result) => {
+        //         if (!result) {
+        //             throw new Error();
+        //         }
+        //         else {
+        //             res.end(JSON.stringify(result))
+        //         }
+        //     }).catch(error => { errorHandler(res, 6, `Such faculty is not found`); });
+        //     break;
+        // }
 
         default: {
             res.end("API not exist pathname");

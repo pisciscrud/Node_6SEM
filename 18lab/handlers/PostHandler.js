@@ -23,16 +23,16 @@ module.exports = ({ res, req, collections }) => {
             break;
         }
 
-        case path == '/api/pulpits': {
+        case path == '/api/tasks': {
             req.on('data', data => {
                 body = JSON.parse(data);
                 console.log(body);
-                collections.Pulpit.create({ pulpit: body.PULPIT, pulpit_name: body.PULPIT_NAME, faculty: body.FACULTY })
+                collections.Tasks.create({ Name: body.Name, Description: body.Description, DepartmentID: body.DepartmentID, EmployeeID: body.EmployeeID, Status: body.Status, Deadline: body.Deadline })
                     .then(result => {
                         console.log(result)
                         res.end(JSON.stringify(body));
                     })
-                    .catch(error => { errorHandler(res, 7, 'Such pulpit is in database'); });
+                    .catch(error => { errorHandler(res, 7, 'Such task is in database'); });
             })
             break;
         }

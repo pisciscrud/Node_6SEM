@@ -5,21 +5,17 @@ client.connect().then(() => console.log('connect'));
 
 client.on('connect', async () => {
     console.log('Test hset: ');
-
     console.time();
-    for (let i = 0; i < 10000; i++) {
-        await client.hSet('hash', i, `{id:${i}, val:val-${i}}`)
-    }
+    const arr = Array.from({length: 10000}, (_, i) =>client.hSet('hash', i, `{id:${i}, val:val-${i}}`) );
+  
+    await Promise.all(arr);
     console.timeEnd();
     console.log('-------------------------------');
 
     console.log('Test hget: ');
-
     console.time();
-    for (let i = 0; i < 10000; i++) {
-        await client.hGet('hash', `${i}`)
-            //.then(result => console.log(result))
-    }
+     const arr2 = Array.from({length: 10000}, (_, i) =>client.hGet('hash', `${i}`) );
+    await Promise.all(arr2);
     console.timeEnd();
     console.log('-------------------------------');
 

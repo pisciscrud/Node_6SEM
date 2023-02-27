@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Auditorium {
+  AUDITORIUM          String  @id @db.Char(10)
+  AUDITORIUM_NAME     String? @db.VarChar(200)
+  AUDITORIUM_CAPACITY Int?
+  AUDITORIUM_TYPE     String  @db.Char(10)
+}
+
+model Auditorium_type {
+  auditorium_type     String @id @db.VarChar(255)
+  auditorium_typename String @db.VarChar(255)
+  AUDITORIUM_REFRERENCE  Auditorium[]
+}
+
+model Faculty {
+  faculty      String   @id @db.VarChar(255)
+  faculty_name String   @db.VarChar(255)
+  Pulpit       Pulpit[]
+}
+
+model Pulpit {
+  pulpit      String    @id @db.VarChar(255)
+  pulpit_name String    @db.VarChar(255)
+  faculty     String    @db.VarChar(255)
+  Faculty     Faculty   @relation(fields: [faculty], references: [faculty], onDelete: NoAction, onUpdate: NoAction, map: "Pulpit_ibfk_1")
+  Subject     Subject[]
+  Teacher     Teacher[]
+
+  @@index([faculty], map: "faculty")
+}
+
+model Subject {
+  subject      String @id @db.VarChar(255)
+  subject_name String @db.VarChar(255)
+  pulpit       String @db.VarChar(255)
+  Pulpit       Pulpit @relation(fields: [pulpit], references: [pulpit], onDelete: NoAction, onUpdate: NoAction, map: "Subject_ibfk_1")
+
+  @@index([pulpit], map: "pulpit")
+}
+
+model Teacher {
+  teacher      String @id @db.VarChar(255)
+  teacher_name String @db.VarChar(255)
+  pulpit       String @db.VarChar(255)
+  Pulpit       Pulpit @relation(fields: [pulpit], references: [pulpit], onDelete: NoAction, onUpdate: NoAction, map: "Teacher_ibfk_1")
+
+  @@index([pulpit], map: "pulpit")
+}

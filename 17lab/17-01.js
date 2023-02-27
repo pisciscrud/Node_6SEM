@@ -4,6 +4,8 @@ port: 6379});
 
 client.connect().then(() => console.log('connect'));
 
+let disconnect = () => client.disconnect().then(() => console.log('disconnect'));
+
 client.on('connect', async () => {
 
     await client.set('user1', 'john')
@@ -15,4 +17,5 @@ client.on('connect', async () => {
 
 client.on('error', (err) => {throw err})
 
-let disconnect = () => client.disconnect().then(() => console.log('disconnect'));
+//console.log(Math.ceil((new Date("10/25/2023") - new Date())/ (1000 * 3600 * 24)));
+
