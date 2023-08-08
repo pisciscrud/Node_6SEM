@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <script defer="true">
+
+    document.addEventListener("DOMContentLoaded",()=>{
+      const applicantForm = document.getElementById('formm')
+       applicantForm.addEventListener('submit', PutMethod)
+    })
+
+   async function PutMethod(e) {
+
+    e.preventDefault();
+
+    console.log(e);
+
+    let Name = document.getElementById("Name").value;
+    let Description=document.getElementById("Description").value;
+    let Deadline = document.getElementById("Deadline").value;
+    let Status = document.getElementById("Status").value;
+    let Employee = document.getElementById("Employee").value
+
+    let data = JSON.stringify({Name,Description, Deadline,Status,Employee});
+
+    const options = {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'   
+        },
+        body :JSON.stringify({Name,Description, Deadline,Status,Employee})
+    };
+  
+    try
+        {
+          console.log(Name);
+          const response = await fetch('http://localhost:3000/task/Update/'
+          +{{ID}},options);
+          document.location.href = 'http://localhost:3000/task';
+        }
+        catch(err)
+        {
+          console.log(err);
+        }
+        
+    }
+  
+  </script>
+
+ <style>
+     body
+      {
+        background-color: rgb(248, 246, 202);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+        form {
+            resize: vertical;
+            padding: 15px;
+            border-radius: 15px;
+            border: 0;
+            box-shadow: 4px 4px 10px rgba(0,0,0,0.06);
+             height: 250px;
+            width:250px;
+            background-color: rgb(248, 188, 248);
+        }
+        input 
+        {
+          padding: 5px;
+           border-radius: 5px;
+           margin:5px;
+        }
+    </style>
+</head>
+<body>
+
+
+
+  <form id="formm">
+    <div>
+      <label for="Name">Name:</label>
+      <input type="text" id="Name" name="Name" value="{{Name}}">
+    </div>
+    <div>
+      <label for="Description">Description:</label>
+      <input type="text" id="Description" name="Description" value="{{Description}}">
+    </div>
+    <div>
+      <label for="Deadline">Deadline:</label>
+      <input type="date" id="Deadline" name="Deadline" value="{{Deadline}}">
+    </div>
+    <div>
+      <label for="Status">Status:</label>
+      <input type="text" id="Status" name="Status" value="{{Status}}">
+    </div>
+    <div>
+
+
+
+
+<label for="Employee">Employee:</label>
+      <select name="Employee" id="Employee">
+        <option selected="selected">{{Employees.LastName}}</option>
+  {{#each employees}}
+     
+    <option value="{{LastName}}">{{LastName}}</option>
+  {{/each}}
+</select>
+    </div>
+    <button  type="submit">Update Task</input>
+  </form>
+
+</body>
+</html>
+

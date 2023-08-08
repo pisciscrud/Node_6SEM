@@ -265,6 +265,7 @@ app.delete("/api/auditoriums/:xyz", async (req, res) => {
   try {
     const auditorium = await prisma.Auditorium.delete({
       where: { AUDITORIUM: req.params.xyz },
+      
     });
     res.json(auditorium);
   } catch (err) {
@@ -341,19 +342,6 @@ app.get("/api/faculties/:xyz/subjects", async (req, res) => {
 
 //TODO
 app.get("/api/auditoriumtypes/:xyz/auditoriums", async (req, res) => {
-  // const data = await prisma.Auditorium_type.findUnique({
-  //   where: { auditorium_type: req.params.xyz },
-  //   select: {
-  //     auditorium_type: true,
-  //     auditorium_typename: true,
-  //     auditorium_type: {
-  //       select: {
-  //         AUDITORIUM: true,
-  //       },
-  //     },
-  //   },
-  // });
-  // res.json(data);
   const auditoriums = await prisma.Auditorium.findMany({
     where: { AUDITORIUM_TYPE: req.params.xyz },
     select: { AUDITORIUM_NAME: true, AUDITORIUM_TYPE: true },

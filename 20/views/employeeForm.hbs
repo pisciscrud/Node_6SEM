@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<style>
+  body
+      {
+        background-color: rgb(248, 246, 202);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+        form {
+            resize: vertical;
+            padding: 15px;
+            border-radius: 15px;
+            border: 0;
+            box-shadow: 4px 4px 10px rgba(0,0,0,0.06);
+             height: 250px;
+            width:250px;
+            background-color: rgb(248, 188, 248);
+        }
+        input 
+        {
+          padding: 5px;
+           border-radius: 5px;
+           margin:5px;
+        }
+    </style>
+<body>
+  <form action="/employee/form" method="post">
+    <div>
+      <label for="LastName">LastName:</label>
+      <input type="text" id="LastName" name="LastName" value="{{LastName}}">
+    </div>
+    <div>
+      <label for="FirstName">FirstName:</label>
+      <input type="text" id="FirstName" name="FirstName" value="{{FirstName}}">
+    </div>
+    <div>
+      <label for="Departament">Departament:</label>
+      <select name="Departament" id="Departament">
+        {{!-- <option selected="selected">{{Employees.LastName}}</option> --}}
+  {{#each departaments}}
+     
+    <option value="{{Name}}">{{Name}}</option>
+  {{/each}}
+</select>
+    </div>
+    <div>
+      <label for="JobTitle">JobTitle:</label>
+      <input type="text" id="JobTitle" name="JobTitle" value="{{JobTitle}}">
+    </div>
+    <div>
+<label for="Salary">Salary:</label>
+      <input type="number" id="JSalary" name="Salary" value="{{Salary}}">
+      
+</select>
+    </div>
+    <button type="submit">Add Task</button>
+  </form>
+</body>
+</html>
+

@@ -1,0 +1,62 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+
+
+
+model countries {
+  idcountry Int     @id @default(autoincrement())
+  country   String? @db.VarChar(50)
+  visa      Boolean? @db.Bit(1)
+  tours     tours[]
+}
+
+model orders {
+  idorder   Int       @id @default(autoincrement())
+  idvoucher Int?
+  customer  String?   @db.VarChar(255)
+  pay       Boolean?  @db.Bit(1)
+  vouchers  vouchers? @relation(fields: [idvoucher], references: [idvoucher], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model touroperators {
+  idoperator  Int     @id @default(autoincrement())
+  name        String? @db.VarChar(150)
+  phonenumber String? @db.VarChar(11)
+  tours       tours[]
+}
+
+model tours {
+  idtours       Int            @id @default(autoincrement())
+  idcountry     Int?
+  idoperator    Int?
+  tourname      String?        @db.VarChar(255)
+  descr         String?        @db.VarChar(255)
+  country       countries?     @relation(fields: [idcountry], references: [idcountry], onDelete: NoAction, onUpdate: NoAction)
+  touroperator  touroperators? @relation(fields: [idoperator], references: [idoperator], onDelete: NoAction, onUpdate: NoAction)
+  vouchers      vouchers[]
+}
+
+model vouchers {
+  idvoucher      Int      @id @default(autoincrement())
+  idtour         Int?
+  vouchername    String?  @db.VarChar(255)
+  descr          String?  @db.VarChar(255)
+  price          Decimal? @db.Decimal(10, 2)
+  numberofpeople Int?
+  nutrition      Boolean? @db.Bit(1)
+  accommodation  Boolean? @db.Bit(1)
+  hot            Boolean? @db.Bit(1)
+  discount       Int?
+  orders         orders[]
+  tour           tours?   @relation(fields: [idtour], references: [idtours], onDelete: NoAction, onUpdate: NoAction)
+}

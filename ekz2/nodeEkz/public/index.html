@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Hi</h1>
+    <div id="operators"></div>
+    <button onclick="prev()">Prev</button>
+    <button onclick="next()">Next</button>
+
+    <script>
+        let skip = 0;
+        function next() {
+            skip++
+            operators.innerHTML = "";
+            var toperators = document.getElementById("operators")
+            fetch(`http://localhost:3000/toursoperators/${skip}`, {
+                method: "GET",
+                mode: "cors",
+                // headers: {
+                //     "Content-Type": "application/json",
+                //     "Accept": "application/json"
+                // },
+            }).then(res => {
+                console.log(res)
+                if (res.ok) {
+                    res.json().then(json => {
+                        json.forEach(elem => {
+                            operators.innerHTML += elem.idoperator + ' ' + elem.name + '<br>'
+                        })
+                    })
+                }
+            })
+
+
+
+        }
+        function prev() {
+            skip--
+            var operators = document.getElementById("operators")
+            fetch(`http://localhost:3000/toursoperators/${skip}`, {
+                method: "GET",
+                mode: "no-cors",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+            }).then(res => {
+                operators.innerHTML = res;
+            })
+        }
+
+    </script>
+</body>
+
+</html>

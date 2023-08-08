@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script type="text/handlebars"></script>
+    <meta charset="utf-8">
+    <title>Employee</title>
+
+     <style>
+      body
+      {
+        background-color: rgb(248, 246, 202);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+      .dropbtn {
+        background-color: rgb(248, 188, 248);
+       color: rgb(54, 48, 48);
+       padding: 10px;
+       font-size: 10px;
+       border: none;
+      border-radius:10px;
+
+      }
+
+      .dropdown {
+        position: relative;
+        display: inline-block;
+        }
+
+      .dropdown-content {
+        display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+.dropdown:hover .dropbtn {background-color: plum;}
+.but{
+   background-color: rgb(248, 188, 248);
+   border: none;
+    border-radius: 5px;
+}
+th 
+{
+  background-color: rgb(248, 188, 248);
+  border-radius: 3px;
+}
+a {
+  color:rgb(94, 7, 55)
+  
+}
+</style>
+     <script defer="true">
+      
+   async function DeleteMethod(ID) {
+    const options = {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'   
+        }
+};
+    try
+        {
+          const response = await fetch('http://localhost:3000/employee/delete/'+ ID , options);
+          document.location.href = 'http://localhost:3000/employee'; 
+        }
+        catch(err)
+        {
+          console.log(err);
+        }
+        
+    }
+  </script>
+  </head>
+  <body>
+
+     <a href="/employee/form">Add Employee</a>
+       <a href="/depart">Departments</a>
+         <a href="/task">Tasks</a>
+    <h1>List of Employee</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>FirstName</th>
+          <th>LastName</th>
+           <th>JobTitle</th>
+           <th>Salary</th>
+           <th>Tasks</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each employee}}
+          <tr>
+            <td>{{FirstName}}</td>
+            <td>{{LastName}}</td>
+            <td>{{JobTitle}}</td>
+            <td>{{Salary}}</td>
+           <td> 
+            {{#if Tasks}}
+             <div class="dropdown">
+              <button class="dropbtn">Tasks</button>
+              <div class="dropdown-content">
+              {{#each Tasks}}
+              <a href="/task/form/{{ID}}">{{Name}}</a>
+                {{/each}}
+           </div>
+            {{!-- <select name="Tasks" id="Tasks">
+              {{#each Tasks}}
+              <option value="{{Name}}" >{{Name}}</option>
+                {{/each}}
+            </select> --}}
+            {{/if}}
+            </td>
+            {{!-- <td>{{#each Tasks}}
+              <h5>{{Name}}</h5>
+               {{/each}}
+            </td> --}}
+
+            <td>
+                    <a href="/employee/form/{{ID}}"> Edit</a>
+            </td>
+            <td>
+                    <button class="but" onclick="DeleteMethod({{ID}})" type="submit"> Delete</button>
+            </td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+    <div>  
+    </div>
+  </body>
+</html>

@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+model Departments {
+  ID             Int           @id(map: "PK__Departme__3214EC2743C26AED") @default(autoincrement())
+  Name           String        @db.NVarChar(100)
+  Description    String?       @db.NVarChar(255)
+  OrganizationID Int?
+  Organization   Organization? @relation(fields: [OrganizationID], references: [ID], onDelete: Cascade, onUpdate: NoAction, map: "FK__Departmen__Organ__693CA210")
+  Employees      Employees[]
+}
+
+model Employees {
+  ID           Int          @id(map: "PK__Employee__3214EC27A8CDC9EC") @default(autoincrement())
+  FirstName    String       @db.NVarChar(100)
+  LastName     String       @db.NVarChar(100)
+  DepartmentID Int?
+  JobTitle     String?      @db.NVarChar(100)
+  Salary       Int?
+  Departments  Departments? @relation(fields: [DepartmentID], references: [ID], onDelete: Cascade, onUpdate: NoAction, map: "FK__Employees__Depar__6C190EBB")
+  Tasks        Tasks[]    
+}
+
+model Organization {
+  ID          Int           @id(map: "PK__Organiza__3214EC27910EDD1E") @default(autoincrement())
+  Name        String        @db.NVarChar(100)
+  Address     String?       @db.NVarChar(255)
+  Industry    String?       @db.NVarChar(100)
+  Size        Int?
+  Description String?       @db.NVarChar(255)
+  Departments Departments[]
+}
+
+model Tasks {
+  ID          Int        @id(map: "PK__Tasks__3214EC278070BF64") @default(autoincrement())
+  Name        String     @db.NVarChar(100)
+  Description String?    @db.NVarChar(255)
+  Deadline    DateTime?  @db.DateTime
+  EmployeeID  Int?
+  Status      String?    @db.NVarChar(100)
+  Employees   Employees? @relation(fields: [EmployeeID], references: [ID], onDelete: Cascade, onUpdate: NoAction, map: "FK__Tasks__EmployeeI__367C1819")
+}

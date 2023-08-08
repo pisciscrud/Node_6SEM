@@ -17,7 +17,7 @@ model Auditorium {
 model Auditorium_type {
   auditorium_type     String @id @db.VarChar(255)
   auditorium_typename String @db.VarChar(255)
-  AUDITORIUM_REFRERENCE  Auditorium[]
+ 
 }
 
 model Faculty {
